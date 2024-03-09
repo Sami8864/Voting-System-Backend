@@ -63,13 +63,11 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+            'table' => 'users',
+            'password' => 'pin', // Change 'password' to your desired custom field (e.g., 'pin' or 'cnic')
         ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
     ],
+
 
     /*
     |--------------------------------------------------------------------------

@@ -54,9 +54,7 @@ class AuthController extends Controller
 
             if ($user && Hash::check($data['pin'], $user->pin)) {
                 $token = $user->createToken('authToken')->plainTextToken;
-
-
-                $resource = YourModelResource::makeWithCodeAndData('Logged in Successfully', 200, ['token' => $token]);
+                $resource = YourModelResource::makeWithCodeAndData('Logged in Successfully', 200, ['token' => $token, 'name' => $user->full_name]);
                 return $resource->response();
             } else {
                 $resource = YourModelResource::makeWithCodeAndData('Invalid Credentials', 401, null);

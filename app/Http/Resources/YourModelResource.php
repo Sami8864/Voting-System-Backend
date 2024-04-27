@@ -5,6 +5,8 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+// This PHP class, within a Laravel application, extends Laravel's JsonResource class and is responsible for formatting responses into a standardized structure. The `toArray` method transforms the resource into an array, including fields for code, message, and data. The `makeWithCodeAndData` method creates a new instance of the resource with provided code, message, and data, facilitating consistent response formatting across the application.
+
 class YourModelResource extends JsonResource
 {
     /**

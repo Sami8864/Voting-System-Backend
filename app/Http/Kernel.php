@@ -4,6 +4,9 @@ namespace App\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
+// This PHP class, within a Laravel application, extends Laravel's HttpKernel and defines the middleware stack, middleware groups, and middleware aliases for handling HTTP requests. It specifies middleware that should run during every request (`$middleware`), middleware groups for web and API routes (`$middlewareGroups`), and aliases for commonly used middleware (`$middlewareAliases`). These configurations help in managing and organizing middleware logic across the application.
+
+
 class Kernel extends HttpKernel
 {
     /**

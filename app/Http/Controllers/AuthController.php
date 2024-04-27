@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\YourModelResource;
 use Illuminate\Support\Facades\Validator;
 
+// This PHP class defines controller methods for user authentication, including user registration and login, with validation and response handling in a Laravel application.
 
 class AuthController extends Controller
 {

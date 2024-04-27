@@ -5,6 +5,9 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
+
+//This is a PHP file defining the console kernel for a Laravel application.
+
 class Kernel extends ConsoleKernel
 {
     /**

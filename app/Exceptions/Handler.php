@@ -5,6 +5,8 @@ namespace App\Exceptions;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
+// This PHP class defines exception handling for a Laravel application, specifying inputs to exclude from session flashing during validation exceptions and registering a callback to report exceptions.
+
 class Handler extends ExceptionHandler
 {
     /**

@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
+// This PHP class serves as middleware in a Laravel application and is responsible for redirecting authenticated users away from certain routes or actions. If a user is authenticated, they will be redirected to the home route specified in the RouteServiceProvider. If not, the middleware allows the request to proceed as normal.
+
 class RedirectIfAuthenticated
 {
     /**

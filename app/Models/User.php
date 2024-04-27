@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+// The `Parties` model in Laravel's application represents a database table for storing party information, with fillable attributes for name, image, and leader.
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;

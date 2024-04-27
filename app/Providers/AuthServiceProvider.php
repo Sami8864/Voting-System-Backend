@@ -5,6 +5,8 @@ namespace App\Providers;
 // use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
+// The `AuthServiceProvider` in Laravel's application is responsible for registering authentication and authorization services.
+
 class AuthServiceProvider extends ServiceProvider
 {
     /**

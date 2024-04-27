@@ -7,6 +7,8 @@ use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
 
+// The `EventServiceProvider` in Laravel's application manages event-to-listener mappings, including sending email verification notifications upon user registration.
+
 class EventServiceProvider extends ServiceProvider
 {
     /**

@@ -8,6 +8,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\YourModelResource;
 
+// This PHP class, within a Laravel application, contains controller methods for managing parties in an election, including adding a party with image upload and loading all parties with associated data, responding with appropriate resources.
+
+
 class ElectionController extends Controller
 {
     public function addParty(Request $request)

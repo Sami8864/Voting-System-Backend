@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
 
+// The `RouteServiceProvider` in Laravel's application is responsible for defining route configurations, including route model bindings, pattern filters, and rate limiting for API routes, and for loading routes from `api.php` and `web.php` route files.
+
 class RouteServiceProvider extends ServiceProvider
 {
     /**

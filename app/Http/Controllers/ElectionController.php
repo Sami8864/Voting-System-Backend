@@ -12,6 +12,7 @@ use App\Models\UserVotes;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use App\Models\UserStatus;
+use App\Models\FAQ;
 
 // This PHP class, within a Laravel application, contains controller methods for managing parties in an election, including adding a party with image upload and loading all parties with associated data, responding with appropriate resources.
 
@@ -110,12 +111,54 @@ class ElectionController extends Controller
                 } else if ($request->election == 'primary') {
                     $votes = count(UserVotes::where('party_id', $party->id)->where('election', 'primary')->get());
                 }
-                $voteCount[]=[
-                    'party'=>$party->name,
-                    'votes'=>$votes
+                $voteCount[] = [
+                    'party' => $party->name,
+                    'votes' => $votes
                 ];
             }
             $resource = YourModelResource::makeWithCodeAndData('Votes Fetched', 200, $voteCount);
+            return $resource->response();
+        }
+    }
+
+    public function question(Request $request)
+    {
+        $validatedData = $request->all();
+        $validator = validator::make($validatedData, [
+            'question' => 'required'
+        ]);
+        if ($validator->fails()) {
+            $resource = YourModelResource::makeWithCodeAndData('Validation Error', 422, $validator->errors());
+            return $resource->response();
+        } else {
+            $faq = FAQ::create(['question' => $request->question, 'user_id' => auth()->user()->id]);
+            $resource = YourModelResource::makeWithCodeAndData('Question Submitted', 200, $faq);
+            return $resource->response();
+        }
+    }
+    public function myQuestions(Request $request)
+    {
+        $faq = FAQ::where('user_id', auth()->user()->id)->get();
+        $resource = YourModelResource::makeWithCodeAndData('Question Submitted', 200, $faq);
+        return $resource->response();
+    }
+
+    public function answer(Request $request)
+    {
+        $validatedData = $request->all();
+        $validator = validator::make($validatedData, [
+            'question_id' => 'required|exists:f_a_q_s,id',
+            'answer' => 'required'
+        ]);
+        if ($validator->fails()) {
+            $resource = YourModelResource::makeWithCodeAndData('Validation Error', 422, $validator->errors());
+            return $resource->response();
+        } else {
+            $faq = FAQ::find($request->question_id);
+            $faq->answer = $request->answer;
+            $faq->status = 'done';
+            $faq->save();
+            $resource = YourModelResource::makeWithCodeAndData('Answer Submitted', 200, $faq);
             return $resource->response();
         }
     }

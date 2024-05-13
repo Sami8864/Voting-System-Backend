@@ -30,8 +30,12 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/update-user', [AuthController::class, 'updateUser']);
     Route::post('/cast-vote', [ElectionController::class, 'castVote']);
     Route::post('/votes', [ElectionController::class, 'votes']);
+    Route::post('/FAQ', [ElectionController::class, 'question']);
+    Route::get('/FAQ', [ElectionController::class, 'myQuestions']);
+
 });
 
 Route::group(['middleware' => 'auth:sanctum','prefix'=>'admin'], function () {
     Route::post('/party', [ElectionController::class, 'addParty']);
+    Route::post('/FAQ', [ElectionController::class, 'answer']);
 });

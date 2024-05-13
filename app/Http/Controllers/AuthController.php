@@ -16,7 +16,23 @@ use App\Models\UserStatus;
 class AuthController extends Controller
 {
 
-
+    public function reset(Request $request){
+        $data = $request->all();
+        $validator = validator::make($data, [
+            'cnic' => ['required|exists:users,cnic', 'digits:14'],
+            'pin' => ['required', 'digits:4', 'confirmed'],
+        ]);
+        if ($validator->fails()) {
+            $resource = YourModelResource::makeWithCodeAndData('Validation Error', 422, $validator->errors());
+            return $resource->response();
+        } else {
+            $user = User::where('cnic', $data['cnic'])->first();
+            $user->pin=Hash::make($data['pin']);
+            $user->save();
+            $resource = YourModelResource::makeWithCodeAndData('Pin Updated', 200, $user);
+            return $resource->response();
+        }
+    }
     public function updateUser(Request $request){
         $data = $request->all();
         $validator = validator::make($data, [
@@ -50,6 +66,7 @@ class AuthController extends Controller
             'full_name' => ['required', 'string', 'max:255'],
             'date_of_birth' => ['required', 'date', 'before_or_equal:' . now()->subYears(18)->format('Y-m-d')],
             'address' => ['required', 'string'],
+            //'email'=>'required|email',
         ]);
         if ($validator->fails()) {
             $resource = YourModelResource::makeWithCodeAndData('Validation Error', 422, $validator->errors());
@@ -61,6 +78,7 @@ class AuthController extends Controller
                 'full_name' => $data['full_name'],
                 'date_of_birth' => $data['date_of_birth'],
                 'address' => $data['address'],
+                //'email' => $data['email'],
             ]);
             UserStatus::create([
                 'user_id'=>$user->id,

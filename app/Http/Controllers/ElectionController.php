@@ -13,7 +13,9 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use App\Models\UserStatus;
 use App\Models\FAQ;
-
+use App\Models\User;
+use App\Models\Admin;
+use Illuminate\Support\Facades\Hash;
 // This PHP class, within a Laravel application, contains controller methods for managing parties in an election, including adding a party with image upload and loading all parties with associated data, responding with appropriate resources.
 
 
@@ -160,6 +162,50 @@ class ElectionController extends Controller
             $faq->save();
             $resource = YourModelResource::makeWithCodeAndData('Answer Submitted', 200, $faq);
             return $resource->response();
+        }
+    }
+
+    public function delUser(Request $request)
+    {
+        User::where('id', $request->user_id)->delete();
+        $resource = YourModelResource::makeWithCodeAndData('User Deleted', 200, "");
+        return $resource->response();
+    }
+    public function delParty(Request $request)
+    {
+        Parties::where('id', $request->party_id)->delete();
+        $resource = YourModelResource::makeWithCodeAndData('Party Deleted', 200, "");
+        return $resource->response();
+    }
+
+    public function users()
+    {
+        $users = User::all();
+        $resource = YourModelResource::makeWithCodeAndData('Answer Submitted', 200, $users);
+        return $resource->response();
+    }
+
+    public function login(Request $request){
+        $validatedData = $request->all();
+        $validator = validator::make($validatedData, [
+            'name' => 'required|exists:admins,name',
+            'password' => 'required'
+        ]);
+        if ($validator->fails()) {
+            $resource = YourModelResource::makeWithCodeAndData('Validation Error', 422, $validator->errors());
+            return $resource->response();
+        } else {
+            $user = Admin::find(1);
+
+            if ($user && Hash::check($validatedData['password'], $user->password)) {
+                $token = $user->createToken('authToken')->plainTextToken;
+                Auth::login($user);
+                $resource = YourModelResource::makeWithCodeAndData('Logged in Successfully', 200, ['token' => $token, 'user' => $user]);
+                return $resource->response();
+            } else {
+                $resource = YourModelResource::makeWithCodeAndData('Invalid Credentials', 401, null);
+                return $resource->response();
+            }
         }
     }
 }

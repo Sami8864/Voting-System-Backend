@@ -28,6 +28,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/party', [ElectionController::class, 'load']);
     Route::get('/user', [AuthController::class, 'load']);
     Route::post('/update-user', [AuthController::class, 'updateUser']);
+    Route::post('/cast-vote', [ElectionController::class, 'castVote']);
+    Route::post('/votes', [ElectionController::class, 'votes']);
 });
 
 Route::group(['middleware' => 'auth:sanctum','prefix'=>'admin'], function () {

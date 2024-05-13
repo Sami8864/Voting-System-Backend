@@ -20,6 +20,7 @@ class AuthController extends Controller
         $data = $request->all();
         $validator = validator::make($data, [
             'cnic' => ['required|exists:users,cnic', 'digits:14'],
+            'old_pin' => ['required', 'digits:4'],
             'pin' => ['required', 'digits:4', 'confirmed'],
         ]);
         if ($validator->fails()) {
@@ -27,10 +28,17 @@ class AuthController extends Controller
             return $resource->response();
         } else {
             $user = User::where('cnic', $data['cnic'])->first();
+            if ($user && Hash::check($validatedData['old_pin'], $user->pin)) {
             $user->pin=Hash::make($data['pin']);
             $user->save();
+
             $resource = YourModelResource::makeWithCodeAndData('Pin Updated', 200, $user);
             return $resource->response();
+            }
+            else{
+                $resource = YourModelResource::makeWithCodeAndData('Wrong Pin', 422, "");
+                return $resource->response();
+            }
         }
     }
     public function updateUser(Request $request){

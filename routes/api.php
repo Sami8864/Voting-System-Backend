@@ -33,6 +33,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/votes', [ElectionController::class, 'votes']);
     Route::post('/FAQ', [ElectionController::class, 'question']);
     Route::get('/FAQ', [ElectionController::class, 'myQuestions']);
+    Route::get('/status', [ElectionController::class, 'status']);
+
 });
 
 Route::group(['middleware' => 'auth:sanctum','prefix'=>'admin'], function () {

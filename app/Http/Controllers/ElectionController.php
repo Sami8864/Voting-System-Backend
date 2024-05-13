@@ -208,4 +208,11 @@ class ElectionController extends Controller
             }
         }
     }
+
+    public function status(){
+        $status=UserStatus::where('user_id',auth()->user()->id)->first();
+            $resource = YourModelResource::makeWithCodeAndData('Status is ', 200, $status);
+            return $resource->response();
+
+    }
 }
